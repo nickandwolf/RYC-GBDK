@@ -1,6 +1,10 @@
 #ifndef KEYS_H
 #define KEYS_H
 
+#define TILES 8
+#define MAP_WIDTH 20
+#define MAP_HEIGHT 18
+
 extern uint8_t previous_keys;
 extern uint8_t keys;
 uint8_t previous_keys = 0;

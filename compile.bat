@@ -4,12 +4,13 @@ DEL *.gb
 
 REM compile .c files into .o files
 C:\gbdk\bin\lcc   -c -o main.o src\main.c
+C:\gbdk\bin\lcc   -c -o Font.o src\Font.c
 C:\gbdk\bin\lcc   -c -o MainCharacter_Sprite.o res\MainCharacter_Sprite.c
 C:\gbdk\bin\lcc   -c -o level1_1_Sprite.o res\level1_1_Sprite.c
 C:\gbdk\bin\lcc   -c -o level1_1.o res\level1_1.c
 
 REM compile a .gb file from the compiled .o files
-C:\gbdk\bin\lcc   -o Example.gb main.o MainCharacter_Sprite.o level1_1.o level1_1_Sprite.o
+C:\gbdk\bin\lcc   -o Example.gb main.o MainCharacter_Sprite.o level1_1.o level1_1_Sprite.o Font.o
 
 REM delete garbo files
 DEL *.asm

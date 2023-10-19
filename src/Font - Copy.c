@@ -230,7 +230,7 @@ void dialog_print(unsigned char *text, uint8_t size)
     // This is the string index.
 	uint8_t index=0;
 
-	while (index<(size-1))
+	while (index-0<(size-1))
 	{
         // This do a line jump if there's no more space on tile width (can be personalized).
 		if (xpos % DIALOG_WIDTH == 0) {xpos=1; ypos++;}
@@ -242,7 +242,7 @@ void dialog_print(unsigned char *text, uint8_t size)
         // This put a - sign if there's no width space and a word isn't finished.
 		if (xpos == DIALOG_WIDTH && text[index] != ' '
 			&& text[index+1] != ' ') // This line is optional. Just remember to close the brackets.
-			{set_win_tile_xy(xpos, ypos, ('-'-0x20)); xpos=1; ypos++;}
+			{set_win_tile_xy(xpos, ypos, ('-'-0x20+Font_sprite_start)); xpos=1; ypos++;}
 
         // This variable sets the current character of the string based on its index.
 		const unsigned char *current = &text[index];
@@ -253,11 +253,11 @@ void dialog_print(unsigned char *text, uint8_t size)
 			{waitpad(J_A); fill_win_rect(DIALOG_INIT_X, DIALOG_INIT_Y, DIALOG_WIDTH, DIALOG_HEIGHT, 0x00); xpos=ypos=1;}
 
         // This print the letters.
-		if (*current != ' ') set_win_tile_xy(xpos, ypos, (*current-0x47));
+		if (*current != ' ') set_win_tile_xy(xpos, ypos, (*current-0x47+Font_sprite_start));
 
         // This print the symbols.
 		for (uint8_t i=0; i<(sizeof(Font_symbols)); i++)
-			if (*current == Font_symbols[i]) set_win_tile_xy(xpos, ypos, (*current-0x20));
+			if (*current == Font_symbols[i]) set_win_tile_xy(xpos, ypos, (*current-0x20+Font_sprite_start));
 
         VBlankDelay(DIALOG_DELAY);
 

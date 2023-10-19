@@ -5,6 +5,8 @@
 #include "../res/level1_1.h"
 #include "inc/Font.h"
 #include "inc/main.h"
+#include "../res/border_sprite.h"
+#include "../res/border_map.h"
 
 //TODO:
 //Overworld initialization Function for levels
@@ -26,6 +28,14 @@ void (*action_func)(void);
 
 uint8_t map[MAP_WIDTH][MAP_HEIGHT];// all maps are only 1 screen big (dunno how to camera yet)
 
+void OpenDialog(unsigned char *text) { //TODO: this only prints 1 character right now
+	move_win(7,96);
+	SHOW_WIN;
+	dialog_print(text, sizeof(text));
+	waitpad(J_A);
+	HIDE_WIN;
+}
+
 void PlacePlayer() {
     playerX = playerMapX * TILES;
     playerY = playerMapY * TILES;
@@ -41,8 +51,12 @@ void Level1_1_Act(void) {
         break;
 
         case 2://CHUTE
-			const char text1[] = "shit kid, you found me.";
-			dialog_print(text1, sizeof(text1));
+			const char text[] = "look kid# i don't  know what to tell ya# maybe you      should just give& up/*";
+			move_win(7,96);
+			SHOW_WIN;
+			dialog_print(text, sizeof(text));
+			waitpad(J_A);
+			HIDE_WIN;
         break;
 
         case 3://PILE
@@ -276,23 +290,15 @@ void Move_MainCharacter() {
     }
 }
 
-void main1(void) {
-    init_bkg(0x00); // This avoid trash characters.
-	set_bkg_data(0x00, sizeof(Font_tiles)>>4, Font_tiles);
-	
-	SHOW_BKG;
-	//SHOW_SPRITES;
-	DISPLAY_ON;
-    // Define your dialoge and print.
-    const char text1[] = "000000000000000000 00000000000000000000000000 blah blah blha blha blha flikwejaoif fweoian";
-	dialog_print(text1, sizeof(text1));
-}
-
 void main(void)
 {	
+	init_win(0xCC);
+	set_win_data(Font_sprite_start,Font_sprite_size,Font_tiles);
+	set_win_data(0xC4,8,border_sprite);
+	set_win_tiles(0,0,20,6,border_map);
+    
 	init_bkg(0x00);
-	set_bkg_data(Font_sprite_start,Font_sprite_size,Font_tiles);
-    InitLevel1_1();
+	InitLevel1_1();
     SHOW_BKG;
 	
     SPRITES_8x16;

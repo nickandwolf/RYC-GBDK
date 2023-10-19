@@ -7,15 +7,6 @@
 
 BANKREF(Font)
 
-/*
-
-question mark 	= /
-elipses 		= #
-coin			= $
-more dialog		= &
-end dialog		= *
-*/
-
 const unsigned char Font_symbols[25] = {
 	'!', '"', '#', '$', '%', '&', 39, '(', ')', '*', '+', ',', '-', '.', '/',
 	'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
@@ -146,22 +137,21 @@ void dialog_print(unsigned char *text, uint8_t size)
 		(xpos == 1 && text[index] == ' ')?index++:index;
 
         // This put a - sign if there's no width space and a word isn't finished.
-		/*if (xpos == DIALOG_WIDTH && text[index] != ' ')
-			//&& text[index+1] != ' ') // This line is optional. Just remember to close the brackets.
+		if (xpos == DIALOG_WIDTH && text[index] != ' '
+			&& text[index+1] != ' ') // This line is optional. Just remember to close the brackets.
 			{set_win_tile_xy(xpos, ypos, ('-'-0x20+Font_sprite_start)); xpos=1; ypos++;}
-		*/
-		
+
         // This variable sets the current character of the string based on its index.
 		const unsigned char *current = &text[index];
 
         // This fills the canvas with an empty tile if there's no more space.
         // Note that it uses the 0x00 tile.
-		if (ypos > DIALOG_HEIGHT) {
+		if (ypos > DIALOG_HEIGHT)
+			{
 				waitpad(J_A);
 				//init_win(0xCC);
 				fill_win_rect(DIALOG_INIT_X, DIALOG_INIT_Y, DIALOG_WIDTH, DIALOG_HEIGHT, 0xCC);
-				xpos=ypos=1;
-			}
+				xpos=ypos=1;}
 
         // This print the letters.
 		if (*current != ' ') set_win_tile_xy(xpos, ypos, (*current-0x47+Font_sprite_start));

@@ -12,12 +12,12 @@
 #define Font_WIDTH 416
 #define Font_HEIGHT 8
 #define Font_sprite_size 52
-#define Font_sprite_start 203
+#define Font_sprite_start 204
 #define DIALOG_WIDTH 18
 #define DIALOG_HEIGHT 4
 #define DIALOG_INIT_X 1
 #define DIALOG_INIT_Y 1
-#define DIALOG_DELAY 4
+#define DIALOG_DELAY 3
 
 #define VBlankDelay(d) for (uint8_t i=0; i<d; i++) vsync();
 

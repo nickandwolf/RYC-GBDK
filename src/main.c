@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "../res/level1_1_Sprite.h"
 #include "../res/MainCharacter_Sprite.h"
 #include "../res/level1_1.h"
@@ -18,17 +19,18 @@
 uint8_t facing = 0;
 uint8_t frame = 4;//(0 or 4)
 int8_t playerX;
-int8_t playerY;//the initialization will have to handle that
+int8_t playerY; //the initialization will have to handle that
 int8_t playerMapX; //gonna sound weird but maps start at 1
 int8_t playerMapY;
 uint8_t playerMoving = 0;
 uint8_t playerTalking = 0;
+uint8_t check;
 
 void (*action_func)(void);
 
 uint8_t map[MAP_WIDTH][MAP_HEIGHT];// all maps are only 1 screen big (dunno how to camera yet)
 
-void OpenDialog(unsigned char *text) { //TODO: this only prints 1 character right now
+void OpenDialog(char *text) { //TODO: this only prints 1 character right now
 	move_win(7,96);
 	SHOW_WIN;
 	dialog_print(text, sizeof(text));
@@ -42,25 +44,48 @@ void PlacePlayer() {
 }
 
 void Level1_1_Act(void) {
-    uint8_t check = CheckCollision();
-	//WELL THIS IS BROKEN
-	check = 2;
+    CheckCollision();
+	printf("DAT:%d", CheckCollision());
+	//waitpad(J_A);
+	//yeah check is broken
+	
+	
     switch(check) {
         case 0://empty
+		break;
         case 1://SOLID
-        break;
-
-        case 2://CHUTE
-			const char text[] = "look kid# i don't  know what to tell ya# maybe you      should just give& up/*";
+			init_win(0xCC);
+			set_win_tiles(0,0,20,6,border_map);
+			char text1[] = "bonk!";
 			move_win(7,96);
 			SHOW_WIN;
-			dialog_print(text, sizeof(text));
+			dialog_print(text1, sizeof(text1));
 			waitpad(J_A);
 			HIDE_WIN;
         break;
 
-        case 3://PILE
+        case 2://CHUTE
+			//char text[] = "look kid# i don't  know what to tell ya.*";
+			//OpenDialog(text);
+			init_win(0xCC);
+			set_win_tiles(0,0,20,6,border_map);
+			char text2[] = "looks like some   sort of chute#*";
+			move_win(7,96);
+			SHOW_WIN;
+			dialog_print(text2, sizeof(text2));
+			waitpad(J_A);
+			HIDE_WIN;
+        break;
 
+        case 35://PILE
+			init_win(0xCC);
+			set_win_tiles(0,0,20,6,border_map);
+			char text3[] = "twisted limbs,    bones, and skulls  peer out from     rotten flesh#*";
+			move_win(7,96);
+			SHOW_WIN;
+			dialog_print(text3, sizeof(text3));
+			waitpad(J_A);
+			HIDE_WIN;
         break;
 
         case 4://CART
@@ -72,10 +97,10 @@ void Level1_1_Act(void) {
 void InitLevel1_1() {
     action_func = Level1_1_Act;
 
-    const uint8_t SOLID = 1;
-    const uint8_t CHUTE = 2;
-    const uint8_t PILE = 3;
-    const uint8_t CART = 4;
+    uint8_t SOLID = 1;
+    uint8_t CHUTE = 2;
+    uint8_t PILE = 3;
+    uint8_t CART = 4;
 
     set_bkg_data(0,level1_1_sprite_size,level1_1_sprite);
     set_bkg_tiles(0,0,MAP_WIDTH,MAP_HEIGHT,level1_1);
@@ -96,12 +121,11 @@ void InitLevel1_1() {
 
     for (uint8_t i = 7; i < 11; i++) map[i][9] = CART;
     for (uint8_t i = 7; i < 11; i++) map[i][10] = CART;
-
-
 }
 
-uint8_t CheckCollision() {
-    int8_t x = 0;
+int8_t CheckCollision() {
+	
+	int8_t x = 0;
     int8_t y = 0;
 
     switch (facing) {
@@ -121,10 +145,13 @@ uint8_t CheckCollision() {
             x = 1;
         break;
     }
-
+	
     if (((playerMapX + x) > MAP_WIDTH-2) || ((playerMapX + x) < 0)) return 1;
+	
     else if (((playerMapY + y) > MAP_HEIGHT-3) || ((playerMapY + y) < 1)) return 1;
-    if (map[playerMapX+x][playerMapY+y]) return get_bkg_tile_xy(playerMapX+x,playerMapY+y);//map[playerMapX+x][playerMapY+y];
+	
+    if (map[playerMapX+x][playerMapY+y]) return 3;//printf("%d",map[playerMapX+x][playerMapY+y]);//get_bkg_tile_xy(playerMapX+x,playerMapY+y);
+	
     return 0;
 }
 
@@ -292,6 +319,7 @@ void Move_MainCharacter() {
 
 void main(void)
 {	
+	check = 0;
 	init_win(0xCC);
 	set_win_data(Font_sprite_start,Font_sprite_size,Font_tiles);
 	set_win_data(0xC4,8,border_sprite);

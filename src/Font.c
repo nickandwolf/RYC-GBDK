@@ -4,8 +4,12 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 #include "inc/Font.h"
+#include "../res/border_map.h"
+#include <gb/gb.h>
 
 BANKREF(Font)
+
+uint8_t DIALOG_DELAY = 1;
 
 /*
 
@@ -131,6 +135,10 @@ const uint8_t Font_tiles[832] =
 
 void dialog_print(unsigned char *text, uint8_t size)
 {
+	init_win(0xCC);
+	set_win_tiles(0,0,20,6,border_map);
+	move_win(7,96);
+	SHOW_WIN;
     // This is an imaginary cursor.
 	uint8_t xpos=0, ypos=0;
     // This is the string index.
@@ -157,6 +165,7 @@ void dialog_print(unsigned char *text, uint8_t size)
         // This fills the canvas with an empty tile if there's no more space.
         // Note that it uses the 0x00 tile.
 		if (ypos > DIALOG_HEIGHT) {
+				waitpadup();
 				waitpad(J_A);
 				//init_win(0xCC);
 				fill_win_rect(DIALOG_INIT_X, DIALOG_INIT_Y, DIALOG_WIDTH, DIALOG_HEIGHT, 0xCC);
@@ -174,4 +183,7 @@ void dialog_print(unsigned char *text, uint8_t size)
 
 		index++;
 	}
+	waitpadup();
+	waitpad(J_A);
+	HIDE_WIN;
 }

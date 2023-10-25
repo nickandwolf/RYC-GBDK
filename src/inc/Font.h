@@ -17,12 +17,13 @@
 #define DIALOG_HEIGHT 4
 #define DIALOG_INIT_X 1
 #define DIALOG_INIT_Y 1
-#define DIALOG_DELAY 3
+//#define DIALOG_DELAY 1
 
 #define VBlankDelay(d) for (uint8_t i=0; i<d; i++) vsync();
 
 BANKREF_EXTERN(Font)
 
+extern uint8_t DIALOG_DELAY;
 extern const unsigned char Font_symbols[25];
 extern const uint8_t Font_tiles[832];
 

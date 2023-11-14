@@ -4,8 +4,10 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 #include "inc/Font.h"
-#include "../res/border_map.h"
+#include "../res/Dialog_Border_map.h"
 #include <gb/gb.h>
+#include "inc/MainCharacter.h"
+
 
 BANKREF(Font)
 
@@ -135,10 +137,27 @@ const uint8_t Font_tiles[832] =
 
 void dialog_print(unsigned char *text, uint8_t size)
 {
-	init_win(0xCC);
-	set_win_tiles(0,0,20,6,border_map);
-	move_win(7,96);
-	SHOW_WIN;
+	init_win(0xCC);//wipe the screen
+	set_win_tiles(0,0,20,6,Dialog_Border_map);//throw up a fresh border
+	SHOW_WIN;//display to the world
+	
+	//We wanna scroll up so we set the end point and move there
+	uint8_t y = 160;
+	while (y > 96) {
+		move_win(7,y);
+		y-=3;//the means the window could end up in the wrong spot, we correct that below
+		//VBlankDelay(DIALOG_DELAY)
+		vsync();
+	}
+	move_win(7,96); //then we make sure it ends where it's supposed to be
+	
+	//we need to hide the player if he's in the wrong spot.
+	int8_t tempPlayerY = 160; //TODO: All sprites will need to do this...
+	if (playerY > 84) {
+		move_sprite(0, playerX+8, tempPlayerY+16);
+        move_sprite(2, playerX+16, tempPlayerY+16);
+	}
+	
     // This is an imaginary cursor.
 	uint8_t xpos=0, ypos=0;
     // This is the string index.
@@ -183,7 +202,25 @@ void dialog_print(unsigned char *text, uint8_t size)
 
 		index++;
 	}
+	
+	//we don't have buttons to accidentially close dialog
 	waitpadup();
 	waitpad(J_A);
+	
+	//put player back
+	if (playerY > 84) {
+		move_sprite(0, playerX+8, playerY+16);
+        move_sprite(2, playerX+16, playerY+16);
+	}
+	
+	//scroll it back down!
+	y = 96;
+	while (y < 160) {
+		move_win(7,y);
+		y+=3;
+		//VBlankDelay(DIALOG_DELAY)
+		vsync();
+	}
+	move_win(7,160);
 	HIDE_WIN;
 }

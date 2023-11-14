@@ -22,11 +22,11 @@
 
 */
 
-#ifndef __MainCharacter_Sprite_h_INCLUDE
-#define __MainCharacter_Sprite_h_INCLUDE
+#ifndef __MainCharacter_sprite_h_INCLUDE
+#define __MainCharacter_sprite_h_INCLUDE
 
 /* Bank of tiles. */
-#define MainCharacter_spriteBank 0
+#define MainCharacter_sprite_Bank 0
 /* Start of tile array. */
 extern const unsigned char MainCharacter_sprite[];
 extern const uint8_t MainCharacter_idle_up_TL;

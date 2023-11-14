@@ -1,6 +1,6 @@
 /*
 
- BORDER_SPRITE.C
+ DIALOG_BORDER_SPRITE.C
 
  Tile Source File.
 
@@ -23,7 +23,7 @@
 */
 
 /* Start of tile array. */
-const unsigned char border_sprite[] =
+const unsigned char Dialog_Border_sprite[] =
 {
   0xFF,0xC7,0xDF,0xA3,0xFF,0x83,0x54,0xA8,
   0xB8,0xC0,0xC3,0xE0,0xE4,0xE3,0xE5,0xE3,
@@ -43,4 +43,4 @@ const unsigned char border_sprite[] =
   0xA7,0xC7,0xA7,0xC7,0xA7,0xC7,0xA7,0xC7
 };
 
-/* End of BORDER_SPRITE.C */
+/* End of DIALOG_BORDER_SPRITE.C */

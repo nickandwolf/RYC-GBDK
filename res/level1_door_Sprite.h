@@ -22,13 +22,13 @@
 
 */
 
-#ifndef __level1_door_Sprite_h_INCLUDE
-#define __level1_door_Sprite_h_INCLUDE
+#ifndef __Level1_Door_sprite_h_INCLUDE
+#define __Level1_Door_sprite_h_INCLUDE
 
 /* Bank of tiles. */
-#define level1_door_spriteBank 0
+#define Level1_Door_sprite_Bank 0
 /* Start of tile array. */
-extern const unsigned char level1_door_sprite[];
+extern const unsigned char Level1_Door_sprite[];
 
 #endif
 

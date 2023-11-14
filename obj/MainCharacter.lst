@@ -1,0 +1,399 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module MainCharacter
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _MainCharacter_walk
+                                     12 	.globl _MainCharacter_idle
+                                     13 	.globl _playerTalking
+                                     14 	.globl _playerMoving
+                                     15 	.globl _frame
+                                     16 	.globl _facing
+                                     17 	.globl _playerMapY
+                                     18 	.globl _playerMapX
+                                     19 	.globl _playerY
+                                     20 	.globl _playerX
+                                     21 ;--------------------------------------------------------
+                                     22 ; special function registers
+                                     23 ;--------------------------------------------------------
+                                     24 ;--------------------------------------------------------
+                                     25 ; ram data
+                                     26 ;--------------------------------------------------------
+                                     27 	.area _DATA
+      000000                         28 _playerX::
+      000000                         29 	.ds 1
+      000001                         30 _playerY::
+      000001                         31 	.ds 1
+      000002                         32 _playerMapX::
+      000002                         33 	.ds 1
+      000003                         34 _playerMapY::
+      000003                         35 	.ds 1
+                                     36 ;--------------------------------------------------------
+                                     37 ; ram data
+                                     38 ;--------------------------------------------------------
+                                     39 	.area _INITIALIZED
+      000000                         40 _facing::
+      000000                         41 	.ds 1
+      000001                         42 _frame::
+      000001                         43 	.ds 1
+      000002                         44 _playerMoving::
+      000002                         45 	.ds 1
+      000003                         46 _playerTalking::
+      000003                         47 	.ds 1
+                                     48 ;--------------------------------------------------------
+                                     49 ; absolute external ram data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _DABS (ABS)
+                                     52 ;--------------------------------------------------------
+                                     53 ; global & static initialisations
+                                     54 ;--------------------------------------------------------
+                                     55 	.area _HOME
+                                     56 	.area _GSINIT
+                                     57 	.area _GSFINAL
+                                     58 	.area _GSINIT
+                                     59 ;--------------------------------------------------------
+                                     60 ; Home
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _HOME
+                                     63 	.area _HOME
+                                     64 ;--------------------------------------------------------
+                                     65 ; code
+                                     66 ;--------------------------------------------------------
+                                     67 	.area _CODE
+                                     68 ;src/MainCharacter.c:14: void MainCharacter_idle() {
+                                     69 ;	---------------------------------
+                                     70 ; Function MainCharacter_idle
+                                     71 ; ---------------------------------
+      000000                         72 _MainCharacter_idle::
+                                     73 ;src/MainCharacter.c:16: switch(facing) {
+      000000 FAr00r00         [16]   74 	ld	a, (#_facing)
+      000003 B7               [ 4]   75 	or	a, a
+      000004 28 15            [12]   76 	jr	Z, 00101$
+      000006 FAr00r00         [16]   77 	ld	a, (#_facing)
+      000009 3D               [ 4]   78 	dec	a
+      00000A 28 34            [12]   79 	jr	Z, 00102$
+      00000C FAr00r00         [16]   80 	ld	a, (#_facing)
+      00000F D6 02            [ 8]   81 	sub	a, #0x02
+      000011 28 52            [12]   82 	jr	Z, 00103$
+      000013 FAr00r00         [16]   83 	ld	a, (#_facing)
+      000016 D6 03            [ 8]   84 	sub	a, #0x03
+      000018 28 70            [12]   85 	jr	Z, 00104$
+      00001A C9               [16]   86 	ret
+                                     87 ;src/MainCharacter.c:17: case 0:
+      00001B                         88 00101$:
+                                     89 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      00001B FAr03r00         [16]   90 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                     91 ;src/MainCharacter.c:20: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      00001E E6 DF            [ 8]   92 	and	a, #0xdf
+      000020 4F               [ 4]   93 	ld	c, a
+                                     94 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000021 21r03r00         [12]   95 	ld	hl, #(_shadow_OAM + 3)
+      000024 71               [ 8]   96 	ld	(hl), c
+                                     97 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000025 FAr0Br00         [16]   98 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                     99 ;src/MainCharacter.c:21: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      000028 E6 DF            [ 8]  100 	and	a, #0xdf
+      00002A 4F               [ 4]  101 	ld	c, a
+                                    102 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00002B 21r0Br00         [12]  103 	ld	hl, #(_shadow_OAM + 11)
+      00002E 71               [ 8]  104 	ld	(hl), c
+                                    105 ;src/MainCharacter.c:23: set_sprite_tile(0, MainCharacter_idle_up_TL);
+      00002F 21r00r00         [12]  106 	ld	hl, #_MainCharacter_idle_up_TL
+      000032 4E               [ 8]  107 	ld	c, (hl)
+                                    108 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000033 21r02r00         [12]  109 	ld	hl, #(_shadow_OAM + 2)
+      000036 71               [ 8]  110 	ld	(hl), c
+                                    111 ;src/MainCharacter.c:24: set_sprite_tile(2, MainCharacter_idle_up_TR);
+      000037 21r00r00         [12]  112 	ld	hl, #_MainCharacter_idle_up_TR
+      00003A 4E               [ 8]  113 	ld	c, (hl)
+                                    114 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      00003B 21r0Ar00         [12]  115 	ld	hl, #(_shadow_OAM + 10)
+      00003E 71               [ 8]  116 	ld	(hl), c
+                                    117 ;src/MainCharacter.c:25: break;
+      00003F C9               [16]  118 	ret
+                                    119 ;src/MainCharacter.c:27: case 1:
+      000040                        120 00102$:
+                                    121 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000040 FAr03r00         [16]  122 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    123 ;src/MainCharacter.c:30: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      000043 E6 DF            [ 8]  124 	and	a, #0xdf
+      000045 4F               [ 4]  125 	ld	c, a
+                                    126 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000046 21r03r00         [12]  127 	ld	hl, #(_shadow_OAM + 3)
+      000049 71               [ 8]  128 	ld	(hl), c
+                                    129 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      00004A FAr0Br00         [16]  130 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    131 ;src/MainCharacter.c:31: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      00004D E6 DF            [ 8]  132 	and	a, #0xdf
+      00004F 4F               [ 4]  133 	ld	c, a
+                                    134 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000050 21r0Br00         [12]  135 	ld	hl, #(_shadow_OAM + 11)
+      000053 71               [ 8]  136 	ld	(hl), c
+                                    137 ;src/MainCharacter.c:33: set_sprite_tile(0, MainCharacter_idle_down_TL);
+      000054 21r00r00         [12]  138 	ld	hl, #_MainCharacter_idle_down_TL
+      000057 4E               [ 8]  139 	ld	c, (hl)
+                                    140 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000058 21r02r00         [12]  141 	ld	hl, #(_shadow_OAM + 2)
+      00005B 71               [ 8]  142 	ld	(hl), c
+                                    143 ;src/MainCharacter.c:34: set_sprite_tile(2, MainCharacter_idle_down_TR);
+      00005C 21r00r00         [12]  144 	ld	hl, #_MainCharacter_idle_down_TR
+      00005F 4E               [ 8]  145 	ld	c, (hl)
+                                    146 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000060 21r0Ar00         [12]  147 	ld	hl, #(_shadow_OAM + 10)
+      000063 71               [ 8]  148 	ld	(hl), c
+                                    149 ;src/MainCharacter.c:35: break;
+      000064 C9               [16]  150 	ret
+                                    151 ;src/MainCharacter.c:37: case 2:
+      000065                        152 00103$:
+                                    153 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000065 FAr03r00         [16]  154 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    155 ;src/MainCharacter.c:40: set_sprite_prop(0, get_sprite_prop(0) | S_FLIPX);
+      000068 F6 20            [ 8]  156 	or	a, #0x20
+      00006A 4F               [ 4]  157 	ld	c, a
+                                    158 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00006B 21r03r00         [12]  159 	ld	hl, #(_shadow_OAM + 3)
+      00006E 71               [ 8]  160 	ld	(hl), c
+                                    161 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      00006F FAr0Br00         [16]  162 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    163 ;src/MainCharacter.c:41: set_sprite_prop(2, get_sprite_prop(2) | S_FLIPX);
+      000072 F6 20            [ 8]  164 	or	a, #0x20
+      000074 4F               [ 4]  165 	ld	c, a
+                                    166 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000075 21r0Br00         [12]  167 	ld	hl, #(_shadow_OAM + 11)
+      000078 71               [ 8]  168 	ld	(hl), c
+                                    169 ;src/MainCharacter.c:44: set_sprite_tile(2, MainCharacter_idle_side_TL);
+      000079 21r00r00         [12]  170 	ld	hl, #_MainCharacter_idle_side_TL
+      00007C 4E               [ 8]  171 	ld	c, (hl)
+                                    172 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      00007D 21r0Ar00         [12]  173 	ld	hl, #(_shadow_OAM + 10)
+      000080 71               [ 8]  174 	ld	(hl), c
+                                    175 ;src/MainCharacter.c:45: set_sprite_tile(0, MainCharacter_idle_side_TR);
+      000081 21r00r00         [12]  176 	ld	hl, #_MainCharacter_idle_side_TR
+      000084 4E               [ 8]  177 	ld	c, (hl)
+                                    178 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000085 21r02r00         [12]  179 	ld	hl, #(_shadow_OAM + 2)
+      000088 71               [ 8]  180 	ld	(hl), c
+                                    181 ;src/MainCharacter.c:46: break;
+      000089 C9               [16]  182 	ret
+                                    183 ;src/MainCharacter.c:48: case 3:
+      00008A                        184 00104$:
+                                    185 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      00008A FAr03r00         [16]  186 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    187 ;src/MainCharacter.c:51: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      00008D E6 DF            [ 8]  188 	and	a, #0xdf
+      00008F 4F               [ 4]  189 	ld	c, a
+                                    190 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000090 21r03r00         [12]  191 	ld	hl, #(_shadow_OAM + 3)
+      000093 71               [ 8]  192 	ld	(hl), c
+                                    193 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000094 FAr0Br00         [16]  194 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    195 ;src/MainCharacter.c:52: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      000097 E6 DF            [ 8]  196 	and	a, #0xdf
+      000099 4F               [ 4]  197 	ld	c, a
+                                    198 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00009A 21r0Br00         [12]  199 	ld	hl, #(_shadow_OAM + 11)
+      00009D 71               [ 8]  200 	ld	(hl), c
+                                    201 ;src/MainCharacter.c:54: set_sprite_tile(0, MainCharacter_idle_side_TL);
+      00009E 21r00r00         [12]  202 	ld	hl, #_MainCharacter_idle_side_TL
+      0000A1 4E               [ 8]  203 	ld	c, (hl)
+                                    204 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      0000A2 21r02r00         [12]  205 	ld	hl, #(_shadow_OAM + 2)
+      0000A5 71               [ 8]  206 	ld	(hl), c
+                                    207 ;src/MainCharacter.c:55: set_sprite_tile(2, MainCharacter_idle_side_TR);
+      0000A6 21r00r00         [12]  208 	ld	hl, #_MainCharacter_idle_side_TR
+      0000A9 4E               [ 8]  209 	ld	c, (hl)
+                                    210 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      0000AA 21r0Ar00         [12]  211 	ld	hl, #(_shadow_OAM + 10)
+      0000AD 71               [ 8]  212 	ld	(hl), c
+                                    213 ;src/MainCharacter.c:57: }
+                                    214 ;src/MainCharacter.c:58: }
+      0000AE C9               [16]  215 	ret
+                                    216 ;src/MainCharacter.c:60: void MainCharacter_walk() {
+                                    217 ;	---------------------------------
+                                    218 ; Function MainCharacter_walk
+                                    219 ; ---------------------------------
+      0000AF                        220 _MainCharacter_walk::
+                                    221 ;src/MainCharacter.c:61: switch(facing) {
+      0000AF FAr00r00         [16]  222 	ld	a, (#_facing)
+      0000B2 B7               [ 4]  223 	or	a, a
+      0000B3 28 18            [12]  224 	jr	Z, 00101$
+      0000B5 FAr00r00         [16]  225 	ld	a, (#_facing)
+      0000B8 3D               [ 4]  226 	dec	a
+      0000B9 28 40            [12]  227 	jr	Z, 00102$
+      0000BB FAr00r00         [16]  228 	ld	a, (#_facing)
+      0000BE D6 02            [ 8]  229 	sub	a, #0x02
+      0000C0 28 67            [12]  230 	jr	Z, 00103$
+      0000C2 FAr00r00         [16]  231 	ld	a, (#_facing)
+      0000C5 D6 03            [ 8]  232 	sub	a, #0x03
+      0000C7 CAr4Fr01         [16]  233 	jp	Z,00104$
+      0000CA C3r73r01         [16]  234 	jp	00105$
+                                    235 ;src/MainCharacter.c:62: case 0:
+      0000CD                        236 00101$:
+                                    237 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      0000CD FAr03r00         [16]  238 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    239 ;src/MainCharacter.c:65: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      0000D0 E6 DF            [ 8]  240 	and	a, #0xdf
+      0000D2 4F               [ 4]  241 	ld	c, a
+                                    242 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      0000D3 21r03r00         [12]  243 	ld	hl, #(_shadow_OAM + 3)
+      0000D6 71               [ 8]  244 	ld	(hl), c
+                                    245 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      0000D7 FAr0Br00         [16]  246 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    247 ;src/MainCharacter.c:66: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      0000DA E6 DF            [ 8]  248 	and	a, #0xdf
+      0000DC 4F               [ 4]  249 	ld	c, a
+                                    250 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      0000DD 21r0Br00         [12]  251 	ld	hl, #(_shadow_OAM + 11)
+      0000E0 71               [ 8]  252 	ld	(hl), c
+                                    253 ;src/MainCharacter.c:68: set_sprite_tile(0, MainCharacter_walk_up_TL+frame);
+      0000E1 FAr00r00         [16]  254 	ld	a, (#_MainCharacter_walk_up_TL)
+      0000E4 21r01r00         [12]  255 	ld	hl, #_frame
+      0000E7 86               [ 8]  256 	add	a, (hl)
+      0000E8 4F               [ 4]  257 	ld	c, a
+                                    258 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      0000E9 21r02r00         [12]  259 	ld	hl, #(_shadow_OAM + 2)
+      0000EC 71               [ 8]  260 	ld	(hl), c
+                                    261 ;src/MainCharacter.c:69: set_sprite_tile(2, MainCharacter_walk_up_TR+frame);
+      0000ED FAr00r00         [16]  262 	ld	a, (#_MainCharacter_walk_up_TR)
+      0000F0 21r01r00         [12]  263 	ld	hl, #_frame
+      0000F3 86               [ 8]  264 	add	a, (hl)
+      0000F4 4F               [ 4]  265 	ld	c, a
+                                    266 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      0000F5 21r0Ar00         [12]  267 	ld	hl, #(_shadow_OAM + 10)
+      0000F8 71               [ 8]  268 	ld	(hl), c
+                                    269 ;src/MainCharacter.c:70: break;
+      0000F9 18 78            [12]  270 	jr	00105$
+                                    271 ;src/MainCharacter.c:72: case 1:
+      0000FB                        272 00102$:
+                                    273 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      0000FB FAr03r00         [16]  274 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    275 ;src/MainCharacter.c:75: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      0000FE E6 DF            [ 8]  276 	and	a, #0xdf
+      000100 4F               [ 4]  277 	ld	c, a
+                                    278 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000101 21r03r00         [12]  279 	ld	hl, #(_shadow_OAM + 3)
+      000104 71               [ 8]  280 	ld	(hl), c
+                                    281 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000105 FAr0Br00         [16]  282 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    283 ;src/MainCharacter.c:76: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      000108 E6 DF            [ 8]  284 	and	a, #0xdf
+      00010A 4F               [ 4]  285 	ld	c, a
+                                    286 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00010B 21r0Br00         [12]  287 	ld	hl, #(_shadow_OAM + 11)
+      00010E 71               [ 8]  288 	ld	(hl), c
+                                    289 ;src/MainCharacter.c:78: set_sprite_tile(0, MainCharacter_walk_down_TL+frame);
+      00010F FAr00r00         [16]  290 	ld	a, (#_MainCharacter_walk_down_TL)
+      000112 21r01r00         [12]  291 	ld	hl, #_frame
+      000115 86               [ 8]  292 	add	a, (hl)
+      000116 4F               [ 4]  293 	ld	c, a
+                                    294 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000117 21r02r00         [12]  295 	ld	hl, #(_shadow_OAM + 2)
+      00011A 71               [ 8]  296 	ld	(hl), c
+                                    297 ;src/MainCharacter.c:79: set_sprite_tile(2, MainCharacter_walk_down_TR+frame);
+      00011B FAr00r00         [16]  298 	ld	a, (#_MainCharacter_walk_down_TR)
+      00011E 21r01r00         [12]  299 	ld	hl, #_frame
+      000121 86               [ 8]  300 	add	a, (hl)
+      000122 4F               [ 4]  301 	ld	c, a
+                                    302 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000123 21r0Ar00         [12]  303 	ld	hl, #(_shadow_OAM + 10)
+      000126 71               [ 8]  304 	ld	(hl), c
+                                    305 ;src/MainCharacter.c:80: break;
+      000127 18 4A            [12]  306 	jr	00105$
+                                    307 ;src/MainCharacter.c:82: case 2:
+      000129                        308 00103$:
+                                    309 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000129 FAr03r00         [16]  310 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    311 ;src/MainCharacter.c:85: set_sprite_prop(0, get_sprite_prop(0) | S_FLIPX);
+      00012C F6 20            [ 8]  312 	or	a, #0x20
+      00012E 4F               [ 4]  313 	ld	c, a
+                                    314 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00012F 21r03r00         [12]  315 	ld	hl, #(_shadow_OAM + 3)
+      000132 71               [ 8]  316 	ld	(hl), c
+                                    317 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000133 FAr0Br00         [16]  318 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    319 ;src/MainCharacter.c:86: set_sprite_prop(2, get_sprite_prop(2) | S_FLIPX);
+      000136 F6 20            [ 8]  320 	or	a, #0x20
+      000138 4F               [ 4]  321 	ld	c, a
+                                    322 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000139 21r0Br00         [12]  323 	ld	hl, #(_shadow_OAM + 11)
+      00013C 71               [ 8]  324 	ld	(hl), c
+                                    325 ;src/MainCharacter.c:89: set_sprite_tile(2, MainCharacter_walk_side_TL);
+      00013D 21r00r00         [12]  326 	ld	hl, #_MainCharacter_walk_side_TL
+      000140 4E               [ 8]  327 	ld	c, (hl)
+                                    328 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000141 21r0Ar00         [12]  329 	ld	hl, #(_shadow_OAM + 10)
+      000144 71               [ 8]  330 	ld	(hl), c
+                                    331 ;src/MainCharacter.c:90: set_sprite_tile(0, MainCharacter_walk_side_TR);
+      000145 21r00r00         [12]  332 	ld	hl, #_MainCharacter_walk_side_TR
+      000148 4E               [ 8]  333 	ld	c, (hl)
+                                    334 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000149 21r02r00         [12]  335 	ld	hl, #(_shadow_OAM + 2)
+      00014C 71               [ 8]  336 	ld	(hl), c
+                                    337 ;src/MainCharacter.c:91: break;
+      00014D 18 24            [12]  338 	jr	00105$
+                                    339 ;src/MainCharacter.c:93: case 3:
+      00014F                        340 00104$:
+                                    341 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      00014F FAr03r00         [16]  342 	ld	a, (#(_shadow_OAM + 3) + 0)
+                                    343 ;src/MainCharacter.c:96: set_sprite_prop(0, get_sprite_prop(0) & ~S_FLIPX);
+      000152 E6 DF            [ 8]  344 	and	a, #0xdf
+      000154 4F               [ 4]  345 	ld	c, a
+                                    346 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      000155 21r03r00         [12]  347 	ld	hl, #(_shadow_OAM + 3)
+      000158 71               [ 8]  348 	ld	(hl), c
+                                    349 ;x:\gbdk\include\gb\gb.h:1860: return shadow_OAM[nb].prop;
+      000159 FAr0Br00         [16]  350 	ld	a, (#(_shadow_OAM + 11) + 0)
+                                    351 ;src/MainCharacter.c:97: set_sprite_prop(2, get_sprite_prop(2) & ~S_FLIPX);
+      00015C E6 DF            [ 8]  352 	and	a, #0xdf
+      00015E 4F               [ 4]  353 	ld	c, a
+                                    354 ;x:\gbdk\include\gb\gb.h:1850: shadow_OAM[nb].prop=prop;
+      00015F 21r0Br00         [12]  355 	ld	hl, #(_shadow_OAM + 11)
+      000162 71               [ 8]  356 	ld	(hl), c
+                                    357 ;src/MainCharacter.c:99: set_sprite_tile(0, MainCharacter_walk_side_TL);
+      000163 21r00r00         [12]  358 	ld	hl, #_MainCharacter_walk_side_TL
+      000166 4E               [ 8]  359 	ld	c, (hl)
+                                    360 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000167 21r02r00         [12]  361 	ld	hl, #(_shadow_OAM + 2)
+      00016A 71               [ 8]  362 	ld	(hl), c
+                                    363 ;src/MainCharacter.c:100: set_sprite_tile(2, MainCharacter_walk_side_TR);
+      00016B 21r00r00         [12]  364 	ld	hl, #_MainCharacter_walk_side_TR
+      00016E 4E               [ 8]  365 	ld	c, (hl)
+                                    366 ;x:\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      00016F 21r0Ar00         [12]  367 	ld	hl, #(_shadow_OAM + 10)
+      000172 71               [ 8]  368 	ld	(hl), c
+                                    369 ;src/MainCharacter.c:102: }
+      000173                        370 00105$:
+                                    371 ;src/MainCharacter.c:104: if (playerMoving == 0) {
+      000173 FAr02r00         [16]  372 	ld	a, (#_playerMoving)
+      000176 B7               [ 4]  373 	or	a, a
+      000177 C0               [20]  374 	ret	NZ
+                                    375 ;src/MainCharacter.c:105: if (frame == 0) {
+      000178 21r01r00         [12]  376 	ld	hl, #_frame
+      00017B 7E               [ 8]  377 	ld	a, (hl)
+      00017C B7               [ 4]  378 	or	a, a
+      00017D 20 03            [12]  379 	jr	NZ, 00107$
+                                    380 ;src/MainCharacter.c:106: frame = 4;
+      00017F 36 04            [12]  381 	ld	(hl), #0x04
+      000181 C9               [16]  382 	ret
+      000182                        383 00107$:
+                                    384 ;src/MainCharacter.c:109: frame = 0;
+      000182 21r01r00         [12]  385 	ld	hl, #_frame
+      000185 36 00            [12]  386 	ld	(hl), #0x00
+                                    387 ;src/MainCharacter.c:112: }
+      000187 C9               [16]  388 	ret
+                                    389 	.area _CODE
+                                    390 	.area _INITIALIZER
+      000000                        391 __xinit__facing:
+      000000 00                     392 	.db #0x00	; 0
+      000001                        393 __xinit__frame:
+      000001 04                     394 	.db #0x04	; 4
+      000002                        395 __xinit__playerMoving:
+      000002 00                     396 	.db #0x00	; 0
+      000003                        397 __xinit__playerTalking:
+      000003 00                     398 	.db #0x00	; 0
+                                    399 	.area _CABS (ABS)

@@ -22,14 +22,14 @@
 
 */
 
-#ifndef __level1_1_Sprite_h_INCLUDE
-#define __level1_1_Sprite_h_INCLUDE
+#ifndef __Level1_1_sprite_h_INCLUDE
+#define __Level1_1_sprite_h_INCLUDE
 
 /* Bank of tiles. */
-#define level1_1_spriteBank 0
-#define level1_1_sprite_size 76
+#define Level1_1_sprite_Bank 0
+#define Level1_1_sprite_size 76
 /* Start of tile array. */
-extern const unsigned char level1_1_sprite[];
+extern const unsigned char Level1_1_sprite[];
 
 #endif
 

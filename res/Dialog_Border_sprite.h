@@ -1,6 +1,6 @@
 /*
 
- TEST_SPRITE.H
+ DIALOG_BORDER_SPRITE.H
 
  Include File.
 
@@ -10,7 +10,7 @@
   Compression          : None.
   Counter              : None.
   Tile size            : 8 x 8
-  Tiles                : 0 to 3
+  Tiles                : 0 to 7
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -22,14 +22,14 @@
 
 */
 
-#ifndef __test_sprite_h_INCLUDE
-#define __test_sprite_h_INCLUDE
+#ifndef __Dialog_Border_sprite_h_INCLUDE
+#define __Dialog_Border_sprite_h_INCLUDE
 
 /* Bank of tiles. */
-#define test_spriteBank 0
+#define Border_sprite_Bank 0
 /* Start of tile array. */
-extern const unsigned char test_sprite[];
+extern const unsigned char Dialog_Border_sprite[];
 
 #endif
 
-/* End of TEST_SPRITE.H */
+/* End of DIALOG_BORDER_SPRITE.H */

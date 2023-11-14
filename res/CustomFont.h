@@ -26,7 +26,7 @@
 #define __CustomFont_h_INCLUDE
 
 /* Bank of tiles. */
-#define CustomFontBank 0
+#define CustomFont_Bank 0
 /* Start of tile array. */
 extern const unsigned char CustomFont[];
 

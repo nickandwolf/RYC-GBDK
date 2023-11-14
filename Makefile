@@ -5,7 +5,7 @@
 
 # If you move this project you can change the directory 
 # to match your GBDK root directory (ex: GBDK_HOME = "C:/GBDK/"
-GBDK_HOME = ../../../
+GBDK_HOME = X:/GBDK/
 
 LCC = $(GBDK_HOME)bin/lcc 
 
@@ -16,12 +16,12 @@ LCC = $(GBDK_HOME)bin/lcc
 
 
 # You can set the name of the .gb ROM file here
-PROJECTNAME    = Example
+PROJECTNAME    = RYC-alpha
 
 SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
-BINS	    = $(OBJDIR)/$(PROJECTNAME).gb
+BINS	    = $(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
@@ -52,11 +52,16 @@ $(OBJDIR)/%.s:	$(SRCDIR)/%.c
 # Link the compiled object files into a .gb ROM file
 $(BINS):	$(OBJS)
 	$(LCC) $(LCCFLAGS) -o $(BINS) $(OBJS)
-
+	if exist "-p" rmdir /Q /S -p
+	if exist $(OBJDIR) rmdir /Q /S $(OBJDIR)
+#	rm $(PROJECTNAME).ihx #I CANNOT FREAKIN' DELETE THIS FILE
+	
+	
 prepare:
 	mkdir -p $(OBJDIR)
 
 clean:
 #	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rm -f  $(OBJDIR)/*.*
+	if exist "-p" rmdir /Q /S -p
+	if exist $(OBJDIR) rmdir /Q /S $(OBJDIR)
 

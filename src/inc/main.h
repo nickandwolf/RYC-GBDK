@@ -10,6 +10,8 @@ extern uint8_t keys;
 uint8_t previous_keys = 0;
 uint8_t keys = 0;
 
+uint8_t battle;
+
 #define UPDATE_KEYS() previous_keys = keys; keys = joypad()
  
 #define KEY_PRESSED(K) (keys & (K))

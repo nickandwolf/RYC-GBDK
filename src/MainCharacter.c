@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "../res/MainCharacter_sprite.h"
 
+uint8_t inventory[30];
 uint8_t facing = 0;
 uint8_t frame = 4;//(0 or 4)
 int8_t playerX;
@@ -28,6 +29,40 @@ uint8_t playerRightArm = 0;
 uint8_t playerTorso = 0;
 uint8_t playerLeftLeg = 0;
 uint8_t playerRightLeg = 0;
+
+void AdjustStat(uint8_t stat, int8_t amount) {
+	switch (stat) {
+		case 0:
+			//woops
+		break;
+		
+		case 1:
+			playerStrength += amount;
+		break;
+		
+		case 2:
+			playerAgility += amount;
+		break;
+		
+		case 3:
+			playerPresence += amount;
+		break;
+		
+		case 4:
+			playerToughness += amount;
+		break;
+		
+		case 5:
+			playerCurrentHP += amount;
+			if (playerCurrentHP < 1) {
+				//gameOver!
+			}
+		break;
+		
+		case 6:
+			playerMaxHP += amount;
+		break;
+}
 
 void MainCharacter_idle() {
     //set sprite data
